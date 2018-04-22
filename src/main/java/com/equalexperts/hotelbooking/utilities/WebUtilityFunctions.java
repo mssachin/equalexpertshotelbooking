@@ -101,4 +101,11 @@ public class WebUtilityFunctions {
                 .until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+
+
+    public static void jsExecutorScrollToElement(WebDriver driver, WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
 }

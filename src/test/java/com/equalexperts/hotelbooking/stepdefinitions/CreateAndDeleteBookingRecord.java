@@ -76,11 +76,13 @@ public class CreateAndDeleteBookingRecord {
     public void i_save_the_record() throws Throwable {
         hotelBookingForm.saveNewlyCreatedRecord();
         driver.navigate().refresh();
+
     }
 
     @Then("^I check the record count has increased$")
     public void i_check_the_record_count_has_increased() throws Throwable {
         hotelBookingForm.explicitWaitForSaveButton();
+        hotelBookingForm.scrollToSaveButton();
         recordCountAfterCreation =hotelBookingForm.getNumberOfCurrentBookingRecords();
         AssertionUtilities.assertTrue(recordCountAfterCreation > initialRecordCount, "New Record was not created");
 
@@ -112,12 +114,16 @@ public class CreateAndDeleteBookingRecord {
 
     @When("^I delete a random existing booking record$")
     public void i_delete_a_random_existing_booking_record() throws Throwable {
+        hotelBookingForm.explicitWaitForSaveButton();
+        hotelBookingForm.scrollToSaveButton();
         hotelBookingForm.deleteARandomBookingRecord();
         driver.navigate().refresh();
     }
 
     @Then("^I check the count of records is reduced$")
     public void i_check_the_count_of_records_is_reduced() throws Throwable {
+        hotelBookingForm.explicitWaitForSaveButton();
+        hotelBookingForm.scrollToSaveButton();
         recordCountAfterDeletion = hotelBookingForm.getNumberOfCurrentBookingRecords();
         AssertionUtilities.assertTrue(recordCountAfterDeletion < initialRecordCount, "Record was not deleted");
     }

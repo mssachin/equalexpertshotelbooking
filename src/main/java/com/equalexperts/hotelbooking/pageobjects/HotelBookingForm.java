@@ -35,8 +35,7 @@ public class HotelBookingForm {
     }
 
     public int getNumberOfCurrentBookingRecords(){
-        WebElement allBookingsContainerElement = WebUtilityFunctions.returnWebElement(driver, allBookingsContainerLocator);
-        List<WebElement> allBookingRowsElements = WebUtilityFunctions.returnWebElementsInsideAnElement(allBookingsContainerElement, singleBookingRowLocator);
+        List<WebElement> allBookingRowsElements = returnAllBookingRowElements();
         return allBookingRowsElements.size();
     }
 
@@ -69,8 +68,7 @@ public class HotelBookingForm {
     }
 
     public List<String> getRowIdsOfAllExistingBookingRecords(){
-        WebElement allBookingsContainerElement = WebUtilityFunctions.returnWebElement(driver, allBookingsContainerLocator);
-        List<WebElement> allBookingRowsElements = WebUtilityFunctions.returnWebElementsInsideAnElement(allBookingsContainerElement, singleBookingRowLocator);
+        List<WebElement> allBookingRowsElements =returnAllBookingRowElements();
         List<String> allBookingRowsRowIds = new ArrayList<>();
 
         for(int i=1; i<allBookingRowsElements.size(); i++){
@@ -101,8 +99,7 @@ public class HotelBookingForm {
     }
 
     public WebElement returnARandomBookingRow(){
-        WebElement allBookingsContainerElement = WebUtilityFunctions.returnWebElement(driver, allBookingsContainerLocator);
-        List<WebElement> allBookingRowsElements = WebUtilityFunctions.returnWebElementsInsideAnElement(allBookingsContainerElement, singleBookingRowLocator);
+        List<WebElement> allBookingRowsElements = returnAllBookingRowElements();
         Random random = new Random();
         List<WebElement> allBookingRowElementsExcludingHeader = allBookingRowsElements.subList(1, allBookingRowsElements.size());
         return allBookingRowElementsExcludingHeader.get(random.nextInt(allBookingRowElementsExcludingHeader.size()));
@@ -117,6 +114,17 @@ public class HotelBookingForm {
 
     public void explicitWaitForSaveButton(){
         WebUtilityFunctions.explicitWaitForAnElement(driver, saveButtonLocator);
+    }
+
+    public void scrollToSaveButton(){
+        WebElement saveButtonElement = WebUtilityFunctions.returnWebElement(driver, saveButtonLocator);
+        WebUtilityFunctions.jsExecutorScrollToElement(driver,saveButtonElement);
+    }
+
+    public List<WebElement> returnAllBookingRowElements(){
+        WebElement allBookingsContainerElement = WebUtilityFunctions.returnWebElement(driver, allBookingsContainerLocator);
+        List<WebElement> allBookingRowsElements = WebUtilityFunctions.returnWebElementsInsideAnElement(allBookingsContainerElement, singleBookingRowLocator);
+        return allBookingRowsElements;
     }
 
 
